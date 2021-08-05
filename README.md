@@ -22,9 +22,14 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+# Files with NestJS
+
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a little playground project of a NestJS REST api with a MinIO container for file storage.
+
+[NestJS docs](https://docs.nestjs.com/)
+[MinIO docs](https://docs.min.io/docs/)
 
 ## Installation
 
@@ -45,6 +50,12 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+Simply navigate to `localhost:3000`. Although there is not much to see, since this app doesn't have a frontend (yet).
+
+## Swagger
+
+Swagger UI can be accessed via `localhost:3000/api` (work in progress)
+
 ## Test
 
 ```bash
@@ -58,16 +69,17 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## MinIO
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+# installation
+$ docker-compose pull
+$ docker-compose up
 
-## Stay in touch
+# default credentials
+# username: minio
+# password: minio123
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+The MinIO web interface can be found at `localhost:9001/login`.
+See `nginx.conf` and `docker-compose.yaml` if you want to change the port configuration
