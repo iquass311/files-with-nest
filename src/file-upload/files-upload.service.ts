@@ -1,17 +1,31 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { BufferedFile } from 'src/minio-client/file.model';
+import { MinioClientService } from 'src/minio-client/minio-client.service';
+import { threadId } from 'worker_threads';
 import { File } from './file.model';
 
 @Injectable()
-export class FilesService {
+export class FileUploadService {
+  constructor(private minioClientService: MinioClientService) {}
+
   private files: File[] = [];
 
-  insertFile(title: string): string {
-    const fileId = Math.floor(Math.random() * 10000).toString();
-    const newFile = new File(fileId, title, new Date());
-    this.files.push(newFile);
-    return fileId;
+  async uploadFile(file: BufferedFile) {
+    // const fileId = Math.floor(Math.random() * 10000).toString();
+    // const newFile = new File(fileId, title, new Date());
+    // this.files.push(newFile);
+    // return fileId;
+
+    const uploadedFile = await this.minioClientService.upload(file);
+
+    //TODO: rename this
+    return {
+      image_url: uploadedFile.url,
+      message: 'File upload successful',
+    };
   }
 
+  /*
   getAllFiles(): File[] {
     return [...this.files];
   }
@@ -42,4 +56,5 @@ export class FilesService {
     }
     return [fileIndex, file];
   }
+*/
 }
