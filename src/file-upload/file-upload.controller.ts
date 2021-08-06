@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -23,6 +24,16 @@ export class FileUploadController {
     return await this.fileUploadService.uploadFile(file);
   }
 
+  @Delete(':id')
+  async deleteFile(@Param('id') fileId: string) {
+    return await this.fileUploadService.deleteFile(fileId);
+  }
+
+  @Get(':id')
+  async getFile(@Param('id') fileId: string) {
+    return await this.fileUploadService.getFile(fileId);
+  }
+
   /*
   @Get()
   getAllFiles(): File[] {
@@ -32,11 +43,6 @@ export class FileUploadController {
   @Get('latest')
   getLatestFile(): File {
     return this.fileUploadService.getLatestFile();
-  }
-
-  @Get(':id')
-  getFile(@Param('id') fileId: string): File {
-    return this.fileUploadService.getSingleFile(fileId);
   }
 
   @Put(':id')

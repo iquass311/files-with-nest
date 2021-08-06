@@ -24,6 +24,15 @@ export class FileUploadService {
     };
   }
 
+  async deleteFile(objectName: string) {
+    await this.minioClientService.delete(objectName);
+  }
+
+  async getFile(objectName: string) {
+    const statObject = await this.minioClientService.get(objectName);
+    return statObject;
+  }
+
   /*
   getAllFiles(): File[] {
     return [...this.files];

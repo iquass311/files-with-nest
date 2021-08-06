@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
 import { Injectable, Logger } from '@nestjs/common';
 import { MinioService } from 'nestjs-minio-client';
 import { BufferedFile } from './file.model';
@@ -88,5 +88,9 @@ export class MinioClientService {
         throw new HttpException('An error occured when deleting.', HttpStatus.BAD_REQUEST);
       }
     });
+  }
+
+  public async get(objectName: string, bucketName: string = this.bucketName) {
+    return this.client.statObject(bucketName, objectName);
   }
 }
