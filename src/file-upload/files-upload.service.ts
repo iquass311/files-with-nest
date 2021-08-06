@@ -18,9 +18,8 @@ export class FileUploadService {
 
     const uploadedFile = await this.minioClientService.upload(file);
 
-    //TODO: rename this
     return {
-      image_url: uploadedFile.url,
+      file_url: uploadedFile.url,
       message: 'File upload successful',
     };
   }

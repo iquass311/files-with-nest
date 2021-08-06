@@ -9,6 +9,44 @@ import { threadId } from 'worker_threads';
 export class MinioClientService {
   constructor(private readonly minio: MinioService) {
     this.logger = new Logger('MinioService');
+
+    const policy = {
+      Version: '2012-10-17',
+      Statement: [
+        {
+          Effect: 'Allow',
+          Principal: {
+            AWS: ['*'],
+          },
+          Action: ['s3:ListBucketMultipartUploads', 's3:GetBucketLocation', 's3:ListBucket'],
+          Resource: ['arn:aws:s3:::' + process.env.MINIO_BUCKET_NAME], // Change this according to your bucket name
+        },
+        {
+          Effect: 'Allow',
+          Principal: {
+            AWS: ['*'],
+          },
+          Action: [
+            's3:PutObject',
+            's3:AbortMultipartUpload',
+            's3:DeleteObject',
+            's3:GetObject',
+            's3:ListMultipartUploadParts',
+          ],
+          Resource: ['arn:aws:s3:::' + process.env.MINIO_BUCKET_NAME + '/*'], // Change this according to your bucket name
+        },
+      ],
+    };
+
+    this.client.setBucketPolicy(
+      process.env.MINIO_BUCKET_NAME,
+      JSON.stringify(policy),
+      function (err) {
+        if (err) throw err;
+
+        console.log('Bucket policy set');
+      },
+    );
   }
 
   private readonly logger: Logger;

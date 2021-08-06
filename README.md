@@ -83,3 +83,5 @@ $ docker-compose up
 
 The MinIO web interface can be found at `localhost:9001/login`.
 See `nginx.conf` and `docker-compose.yaml` if you want to change the port configuration
+
+Remember to create a bucket with the `MINIO_BUCKET_NAME` set in the `.env` file in the MinIO interface.
