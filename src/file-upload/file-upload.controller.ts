@@ -29,6 +29,11 @@ export class FileUploadController {
     return await this.fileUploadService.deleteFile(fileId);
   }
 
+  @Get('latest')
+  async getLatestFile() {
+    return await this.fileUploadService.getLatestFile();
+  }
+
   @Get(':id')
   async getFile(@Param('id') fileId: string) {
     return await this.fileUploadService.getFile(fileId);
@@ -40,10 +45,6 @@ export class FileUploadController {
     return this.fileUploadService.getAllFiles();
   }
 
-  @Get('latest')
-  getLatestFile(): File {
-    return this.fileUploadService.getLatestFile();
-  }
 
   @Put(':id')
   replaceFile(@Param('id') fileId: string, @Body('title') fileTitle: string) {

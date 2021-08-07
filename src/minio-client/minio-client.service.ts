@@ -100,4 +100,21 @@ export class MinioClientService {
   public async get(objectName: string, bucketName: string = this.bucketName) {
     return this.client.statObject(bucketName, objectName);
   }
+
+  public async getLatest(bucketName: string = this.bucketName): Promise<any[]> {
+    const fileArray: any[] = await new Promise((resolve, reject) => {
+      const arr = [];
+      const stream = this.client.listObjects(bucketName);
+      stream.on('data', (obj) => {
+        console.log(obj);
+        arr.push(obj);
+      });
+      stream.on('error', reject);
+      stream.on('end', () => {
+        resolve(arr);
+      });
+    });
+
+    return fileArray;
+  }
 }
