@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
 import { Injectable, Logger } from '@nestjs/common';
 import { MinioService } from 'nestjs-minio-client';
-import { BufferedFile, FileMetadata } from './file.model';
+import { BufferedFile, FileData, FileMetadata } from './file.model';
 import * as crypto from 'crypto';
 import { threadId } from 'worker_threads';
 
@@ -60,7 +60,7 @@ export class MinioClientService {
     file: BufferedFile,
     objectName: string = '',
     bucketName: string = this.bucketName,
-  ) {
+  ): Promise<FileMetadata> {
     // optionally restrict allowed file type
     // if (!(file.mimetype.includes('jpeg') || file.mimetype.includes('png'))) {
     //   throw new HttpException('File type not supported.', HttpStatus.BAD_REQUEST);
@@ -115,16 +115,16 @@ export class MinioClientService {
     });
   }
 
-  public async get(objectName: string, bucketName: string = this.bucketName) {
+  public async get(objectName: string, bucketName: string = this.bucketName): Promise<FileData> {
     return this.client.statObject(bucketName, objectName);
   }
 
-  public async getAll(bucketName: string = this.bucketName): Promise<any[]> {
-    const fileArray: any[] = await new Promise((resolve, reject) => {
-      const arr = [];
+  //TODO: this throws an error when there is exactly 1 file in the bucket
+  public async getAll(bucketName: string = this.bucketName): Promise<FileData[]> {
+    const fileDataArray: FileData[] = await new Promise((resolve, reject) => {
+      const arr: FileData[] = [];
       const stream = this.client.listObjects(bucketName);
       stream.on('data', (obj) => {
-        console.log(obj);
         arr.push(obj);
       });
       stream.on('error', reject);
@@ -133,6 +133,6 @@ export class MinioClientService {
       });
     });
 
-    return fileArray;
+    return fileDataArray;
   }
 }

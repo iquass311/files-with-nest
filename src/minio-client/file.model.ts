@@ -17,3 +17,9 @@ export interface FileMetadata {
   modifieddate: Date;
   'content-type'?: string;
 }
+export interface FileData {
+  size: number;
+  metaData: FileMetadata;
+  lastModified: Date;
+  etag: string;
+}

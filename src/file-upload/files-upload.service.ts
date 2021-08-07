@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { BufferedFile } from 'src/minio-client/file.model';
+import { BufferedFile, FileData, FileMetadata } from 'src/minio-client/file.model';
 import { MinioClientService } from 'src/minio-client/minio-client.service';
 import { threadId } from 'worker_threads';
 import { File } from './file.model';
@@ -8,15 +8,8 @@ import { File } from './file.model';
 export class FileUploadService {
   constructor(private minioClientService: MinioClientService) {}
 
-  private files: File[] = [];
-
-  async uploadFile(file: BufferedFile) {
-    // const fileId = Math.floor(Math.random() * 10000).toString();
-    // const newFile = new File(fileId, title, new Date());
-    // this.files.push(newFile);
-    // return fileId;
-
-    const uploadedFile = await this.minioClientService.upload(file);
+  async uploadFile(file: BufferedFile): Promise<{ metaData: FileMetadata; message: string }> {
+    const uploadedFile: FileMetadata = await this.minioClientService.upload(file);
 
     return {
       metaData: uploadedFile,
@@ -24,17 +17,15 @@ export class FileUploadService {
     };
   }
 
-  async updateFile(file: BufferedFile, objectName: string) {
-    // const fileId = Math.floor(Math.random() * 10000).toString();
-    // const newFile = new File(fileId, title, new Date());
-    // this.files.push(newFile);
-    // return fileId;
-
-    const updatedFile = await this.minioClientService.upload(file, objectName);
+  async updateFile(
+    file: BufferedFile,
+    objectName: string,
+  ): Promise<{ metaData: FileMetadata; message: string }> {
+    const updatedFile: FileMetadata = await this.minioClientService.upload(file, objectName);
 
     return {
       metaData: updatedFile,
-      message: 'File upload successful',
+      message: 'File update successful',
     };
   }
 
@@ -42,13 +33,13 @@ export class FileUploadService {
     await this.minioClientService.delete(objectName);
   }
 
-  async getFile(objectName: string) {
-    const statObject = await this.minioClientService.get(objectName);
+  async getFile(objectName: string): Promise<FileData> {
+    const statObject: FileData = await this.minioClientService.get(objectName);
     return statObject;
   }
 
   async getLatestFile() {
-    const fileArray: any[] = await this.minioClientService.getAll();
+    const fileArray: FileData[] = await this.minioClientService.getAll();
     const latestFile = fileArray.reduce((accumulator, currentValue) => {
       return accumulator.lastModified > currentValue.lastModified ? accumulator : currentValue;
     });
@@ -56,7 +47,7 @@ export class FileUploadService {
   }
 
   async getAllFiles() {
-    const fileArray: any[] = await this.minioClientService.getAll();
-    return fileArray;
+    const fileDataArray: FileData[] = await this.minioClientService.getAll();
+    return fileDataArray;
   }
 }
