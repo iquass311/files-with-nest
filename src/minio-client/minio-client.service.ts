@@ -56,20 +56,37 @@ export class MinioClientService {
     return this.minio.client;
   }
 
-  public async upload(file: BufferedFile, bucketName: string = this.bucketName) {
+  public async upload(
+    file: BufferedFile,
+    objectName: string = '',
+    bucketName: string = this.bucketName,
+  ) {
     // optionally restrict allowed file type
     // if (!(file.mimetype.includes('jpeg') || file.mimetype.includes('png'))) {
     //   throw new HttpException('File type not supported.', HttpStatus.BAD_REQUEST);
     // }
 
-    const timestamp = Date.now().toString();
-    const hashedFileName = crypto.createHash('md5').update(timestamp).digest('hex');
-    const extension = file.originalname.substring(
-      file.originalname.lastIndexOf('.'),
-      file.originalname.length,
-    );
+    let existingFile;
+    let existingFileMetaData;
+    let fileName = '';
 
-    const fileName = hashedFileName + extension;
+    if (objectName) {
+      existingFile = await this.get(objectName);
+      existingFileMetaData = existingFile.metaData;
+      console.log('File found: ', existingFile);
+    }
+
+    if (objectName) {
+      fileName = objectName;
+    } else {
+      const timestamp = Date.now().toString();
+      const hashedFileName = crypto.createHash('md5').update(timestamp).digest('hex');
+      const extension = file.originalname.substring(
+        file.originalname.lastIndexOf('.'),
+        file.originalname.length,
+      );
+      fileName = hashedFileName + extension;
+    }
 
     const metaData: FileMetadata = {
       name: fileName,
@@ -77,7 +94,7 @@ export class MinioClientService {
       encoding: file.encoding,
       mimetype: file.mimetype,
       size: file.size,
-      createddate: new Date(),
+      createddate: existingFileMetaData ? existingFileMetaData.createddate : new Date(),
       modifieddate: new Date(),
     };
 

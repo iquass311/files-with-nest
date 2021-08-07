@@ -24,6 +24,12 @@ export class FileUploadController {
     return await this.fileUploadService.uploadFile(file);
   }
 
+  @Put(':id')
+  @UseInterceptors(FileInterceptor('file'))
+  async updateFile(@UploadedFile() file: BufferedFile, @Param('id') fileId: string) {
+    return await this.fileUploadService.updateFile(file, fileId);
+  }
+
   @Delete(':id')
   async deleteFile(@Param('id') fileId: string) {
     return await this.fileUploadService.deleteFile(fileId);
@@ -43,11 +49,4 @@ export class FileUploadController {
   async getAllFiles() {
     return await this.fileUploadService.getAllFiles();
   }
-
-  /*
-  @Put(':id')
-  replaceFile(@Param('id') fileId: string, @Body('title') fileTitle: string) {
-    this.fileUploadService.replaceFile(fileId, fileTitle);
-  }
- */
 }
