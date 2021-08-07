@@ -39,13 +39,12 @@ export class FileUploadController {
     return await this.fileUploadService.getFile(fileId);
   }
 
-  /*
   @Get()
-  getAllFiles(): File[] {
-    return this.fileUploadService.getAllFiles();
+  async getAllFiles() {
+    return await this.fileUploadService.getAllFiles();
   }
 
-
+  /*
   @Put(':id')
   replaceFile(@Param('id') fileId: string, @Body('title') fileTitle: string) {
     this.fileUploadService.replaceFile(fileId, fileTitle);

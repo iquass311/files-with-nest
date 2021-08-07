@@ -57,6 +57,7 @@ export class MinioClientService {
   }
 
   public async upload(file: BufferedFile, bucketName: string = this.bucketName) {
+    // optionally restrict allowed file type
     // if (!(file.mimetype.includes('jpeg') || file.mimetype.includes('png'))) {
     //   throw new HttpException('File type not supported.', HttpStatus.BAD_REQUEST);
     // }
@@ -101,7 +102,7 @@ export class MinioClientService {
     return this.client.statObject(bucketName, objectName);
   }
 
-  public async getLatest(bucketName: string = this.bucketName): Promise<any[]> {
+  public async getAll(bucketName: string = this.bucketName): Promise<any[]> {
     const fileArray: any[] = await new Promise((resolve, reject) => {
       const arr = [];
       const stream = this.client.listObjects(bucketName);

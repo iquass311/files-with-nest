@@ -34,17 +34,19 @@ export class FileUploadService {
   }
 
   async getLatestFile() {
-    const fileArray: any[] = await this.minioClientService.getLatest();
+    const fileArray: any[] = await this.minioClientService.getAll();
     const latestFile = fileArray.reduce((accumulator, currentValue) => {
       return accumulator.lastModified > currentValue.lastModified ? accumulator : currentValue;
     });
     return latestFile;
   }
 
-  /*
-  getAllFiles(): File[] {
-    return [...this.files];
+  async getAllFiles() {
+    const fileArray: any[] = await this.minioClientService.getAll();
+    return fileArray;
   }
+
+  /*
 
   getSingleFile(fileId: string): File {
     const file = this.findFile(fileId)[1];
