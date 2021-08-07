@@ -13,6 +13,7 @@ export interface FileMetadata {
   encoding: string;
   mimetype: string;
   size: number;
-  createdDate: Date;
-  modifiedDate: Date;
+  createddate: Date;
+  modifieddate: Date;
+  'content-type'?: string;
 }

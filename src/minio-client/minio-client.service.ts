@@ -76,8 +76,8 @@ export class MinioClientService {
       encoding: file.encoding,
       mimetype: file.mimetype,
       size: file.size,
-      createdDate: new Date(),
-      modifiedDate: new Date(),
+      createddate: new Date(),
+      modifieddate: new Date(),
     };
 
     this.client.putObject(bucketName, fileName, file.buffer, metaData, function (err, res) {
