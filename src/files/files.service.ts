@@ -1,8 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { BufferedFile, FileData, FileMetadata } from 'src/minio-client/file.model';
-import { MinioClientService } from 'src/minio-client/minio-client.service';
-import { threadId } from 'worker_threads';
-import { File } from './file.model';
+import { Injectable } from '@nestjs/common';
+import { BufferedFile, FileData, FileMetadata } from './file.model';
+import { MinioClientService } from '../minio-client/minio-client.service';
 
 @Injectable()
 export class FilesService {

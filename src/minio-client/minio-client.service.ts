@@ -1,9 +1,8 @@
 import { HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
 import { Injectable, Logger } from '@nestjs/common';
 import { MinioService } from 'nestjs-minio-client';
-import { BufferedFile, FileData, FileMetadata } from './file.model';
+import { BufferedFile, FileData, FileMetadata } from '../files/file.model';
 import * as crypto from 'crypto';
-import { threadId } from 'worker_threads';
 
 @Injectable()
 export class MinioClientService {

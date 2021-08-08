@@ -10,9 +10,8 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
-import { File } from './file.model';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { BufferedFile } from 'src/minio-client/file.model';
+import { BufferedFile } from './file.model';
 
 @Controller('files')
 export class FilesController {
