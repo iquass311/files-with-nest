@@ -5,7 +5,7 @@ import { threadId } from 'worker_threads';
 import { File } from './file.model';
 
 @Injectable()
-export class FileUploadService {
+export class FilesService {
   constructor(private minioClientService: MinioClientService) {}
 
   async uploadFile(file: BufferedFile): Promise<{ metaData: FileMetadata; message: string }> {
