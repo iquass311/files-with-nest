@@ -37,40 +37,6 @@ This is a little playground project of a NestJS REST api with a MinIO container 
 $ npm install
 ```
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Postman
-
-Test the api via [Postman](https://web.postman.co/) by importing `postman_collection.json inyo your workspace`.
-
-## Swagger
-
-Swagger UI can be accessed via `localhost:3000/api`, but it's a work in progress because the POST /files and PUT /files endpoints don't work yet.
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
 ## MinIO
 
 ```bash
@@ -87,3 +53,37 @@ The MinIO web interface can be found at `localhost:9001/login`.
 See `nginx.conf` and `docker-compose.yaml` if you want to change the port configuration
 
 Remember to create a bucket with the `MINIO_BUCKET_NAME` set in the `.env` file in the MinIO interface.
+
+## Running the app
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+
+## Postman
+
+Test the api via [Postman](https://web.postman.co/) by importing `postman_collection.json into your workspace`.
+
+## Swagger
+
+Swagger UI can be accessed via `localhost:3000/api`, but it's a work in progress because the `POST /files` and `PUT /files` endpoints don't work yet.
+
+## Test
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
