@@ -17,7 +17,11 @@ describe('FilesController (e2e)', () => {
     await app.init();
   });
 
+  // it('/files (GET)', () => {
+  //   return request(app.getHttpServer()).get('/files').expect(200).expect('Content-Type', /json/);
+  // });
+
   it('/files (GET)', () => {
-    return request(app.getHttpServer()).get('/files').expect(200);
+    return request(app.getHttpServer()).get('/files').expect(200).expect('Content-Type', /json/);
   });
 });

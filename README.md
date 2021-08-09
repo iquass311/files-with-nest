@@ -50,11 +50,13 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-Simply navigate to `localhost:3000`. Although there is not much to see, since this app doesn't have a frontend (yet).
+## Postman
+
+Test the api via [Postman](https://web.postman.co/) by importing `postman_collection.json inyo your workspace`.
 
 ## Swagger
 
-Swagger UI can be accessed via `localhost:3000/api` (work in progress)
+Swagger UI can be accessed via `localhost:3000/api`, but it's a work in progress because the POST /files and PUT /files endpoints don't work yet.
 
 ## Test
 

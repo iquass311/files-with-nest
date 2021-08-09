@@ -18,8 +18,9 @@ export interface FileMetadata {
   'content-type'?: string;
 }
 export interface FileData {
+  name?: string;
   size: number;
-  metaData: FileMetadata;
+  metaData?: FileMetadata;
   lastModified: Date;
   etag: string;
 }
